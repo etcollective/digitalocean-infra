@@ -8,7 +8,6 @@ from common.project import do_region, project, stack
 config = pulumi.Config('cluster')
 size = config.get('node_size') or 's-1vcpu-2gb'
 node_count = config.get_int('node_count') or 1
-volume_size = config.get_int('volume_size') or 10
 
 # Setup Cluster
 cluster = digitalocean.KubernetesCluster(
@@ -33,15 +32,5 @@ cluster_project_attachment = digitalocean.ProjectResources(
     opts=pulumi.ResourceOptions(parent=cluster),
 )
 
-volume = digitalocean.Volume(
-    'k8s-cluster-volume',
-    name=f'{stack}-common',
-    size=volume_size,
-    region=do_region,
-    opts=pulumi.ResourceOptions(parent=cluster),
-)
-
 # Setup Outputs
 pulumi.export('Kubernetes Cluster Endpoint', cluster.endpoint)
-pulumi.export('Block Storage Volume Name', volume.name)
-pulumi.export('Block Storage Volume Size', volume.size)
