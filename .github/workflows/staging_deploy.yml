@@ -1,0 +1,42 @@
+name: Pulumi
+
+on:
+  pull_request:
+    branches:
+      - staging
+
+env:
+  PULUMI_ACCESS_TOKEN: "${{ secrets.PULUMI_ACCESS_TOKEN }}"
+  PULUMI_STACK_NAME: explorerstheatrecollective/staging
+
+jobs:
+  pulumi-up:
+    name: Pulumi
+    environment:
+      name: staging
+    runs-on: ubuntu-latest
+    steps:
+      - name: Turnstyle 🚪
+        if: ${{ github.event_name == 'push' }}
+        uses: softprops/turnstyle@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Checkout 🛎️
+        uses: actions/checkout@v4
+
+      - name: Install Python 🐍
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+          cache: pip
+          cache-dependency-path: "requirements.txt"
+
+      - name: Install Dependencies 📝
+        run: pip install -r requirements.txt
+
+      - name: Pulumi Update 🚀
+        uses: pulumi/actions@v4
+        with:
+          command: up
+          stack-name: ${{ env.PULUMI_STACK_NAME }}
