@@ -1,2 +1,13 @@
 config:
+  cluster:node_size: s-2vcpu-2gb
   common:region: sfo3
+  pretix:instance_name: Pretix - Staging
+  pretix:smtp_from: noreply@etcollective.org
+  pretix:smtp_host: smtp-relay@gmail.com
+  pretix:smtp_port: 587
+  pretix:host: staging-pretix.etcollective.org
+  pretix:version_tag: 2023.10.0
+  redis:authEnabled: "false"
+  redis:master_nodes: "1"
+  redis:replica_nodes: "0"
+  redis:version: 18.4.0
