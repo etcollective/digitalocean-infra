@@ -1,5 +1,5 @@
 pulumi>=3.0.0,<4.0.0
 pulumi-digitalocean>=4.0.0,<5.0.0
-pulumi-kubernetes>=4.5.5,<6.0.0
-pulumi-cloudflare
-pulumi-random
+pulumi-kubernetes>=4.5.5,<5.0.0
+pulumi-cloudflare>=5.16.0,<6.0.0
+pulumi-random>=4.15.0,<5.0.0
