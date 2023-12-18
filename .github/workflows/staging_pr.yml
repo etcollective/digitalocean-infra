@@ -2,8 +2,6 @@ name: Pulumi
 
 on:
   pull_request:
-    branches:
-      - staging
 
 env:
   PULUMI_ACCESS_TOKEN: "${{ secrets.PULUMI_ACCESS_TOKEN }}"

@@ -2,8 +2,7 @@ name: Pulumi
 
 on:
   push:
-    branches:
-      - staging
+
 
 env:
   PULUMI_ACCESS_TOKEN: "${{ secrets.PULUMI_ACCESS_TOKEN }}"
