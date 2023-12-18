@@ -87,6 +87,15 @@ deployment = k8s.apps.v1.Deployment(
                                 container_port=80,
                             )
                         ],
+                        liveness_probe=k8s.core.v1.ProbeArgs(
+                            http_get=k8s.core.v1.HTTPGetActionArgs(
+                                path='/healthcheck',
+                                port=80,
+                            ),
+                            failure_threshold=1,
+                            initial_delay_seconds=10,
+                            period_seconds=10,
+                        ),
                         volume_mounts=[
                             k8s.core.v1.VolumeMountArgs(
                                 name='pretix',

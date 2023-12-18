@@ -50,6 +50,9 @@ config = cloudflare.TunnelConfig(
                 service='http_status:404',
             ),
         ],
+        origin_request=cloudflare.TunnelConfigConfigOriginRequestArgs(
+            no_happy_eyeballs=True,
+        ),
     ),
     opts=pulumi.ResourceOptions(parent=tunnel),
 )

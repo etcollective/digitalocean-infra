@@ -39,7 +39,7 @@ deployment = k8s.apps.v1.Deployment(
         },
     ),
     spec=k8s.apps.v1.DeploymentSpecArgs(
-        replicas=2,
+        replicas=1,
         selector=k8s.meta.v1.LabelSelectorArgs(
             match_labels={
                 'app': 'cloudflared',
@@ -85,10 +85,35 @@ deployment = k8s.apps.v1.Deployment(
                                 ),
                             )
                         ],
+                        resources=k8s.core.v1.ResourceRequirementsArgs(
+                            limits={
+                                'cpu': '500m',
+                                'memory': '512Mi',
+                            },
+                            requests={
+                                'cpu': '1m',
+                                'memory': '10Mi',
+                            },
+                        ),
+                        security_context=k8s.core.v1.SecurityContextArgs(
+                            read_only_root_filesystem=True,
+                        ),
                     ),
                 ],
+                termination_grace_period_seconds=30,
+                dns_policy='ClusterFirst',
+                automount_service_account_token=False,
             ),
         ),
+        strategy=k8s.apps.v1.DeploymentStrategyArgs(
+            type='RollingUpdate',
+            rolling_update=k8s.apps.v1.RollingUpdateDeploymentArgs(
+                max_unavailable='25%',
+                max_surge='25%',
+            ),
+        ),
+        revision_history_limit=1,
+        progress_deadline_seconds=600,
     ),
     opts=pulumi.ResourceOptions(parent=ns, depends_on=[tunnel]),
 )

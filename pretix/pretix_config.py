@@ -44,6 +44,8 @@ config_secret = k8s.core.v1.Secret(
     url={url}
     currency=USD
     datadir=/data
+    obligatory_2fa=True
+    ecb_rates=off
     trust_x_forwarded_for=on
     trust_x_forwarded_proto=on
 
