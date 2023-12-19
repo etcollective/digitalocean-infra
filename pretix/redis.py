@@ -43,6 +43,9 @@ redis_chart = k8s.helm.v3.Chart(
             'volumePermissions': {
                 'enabled': True,
             },
+            'metrics': {
+                'enabled': True,
+            },
         },
     ),
     opts=pulumi.ResourceOptions(parent=ns),

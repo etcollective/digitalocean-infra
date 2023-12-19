@@ -135,6 +135,7 @@ service = k8s.core.v1.Service(
         ports=[
             k8s.core.v1.ServicePortArgs(
                 protocol='TCP',
+                name='pretix',
                 port=80,
                 target_port=80,
             )
@@ -142,36 +143,3 @@ service = k8s.core.v1.Service(
     ),
     opts=pulumi.ResourceOptions(parent=deployment),
 )
-
-# ingress = k8s.networking.v1.Ingress(
-#     'pretix-ingress',
-#     metadata=k8s.meta.v1.ObjectMetaArgs(
-#         name='pretix-ingress',
-#         namespace=ns.metadata['name'],
-#         labels=labels,
-#     ),
-#     spec=k8s.networking.v1.IngressSpecArgs(
-#         rules=[
-#             k8s.networking.v1.IngressRuleArgs(
-#                 host=host,
-#                 http=k8s.networking.v1.HTTPIngressRuleValueArgs(
-#                     paths=[
-#                         k8s.networking.v1.HTTPIngressPathArgs(
-#                             path='/',
-#                             path_type='Prefix',
-#                             backend=k8s.networking.v1.IngressBackendArgs(
-#                                 service=k8s.networking.v1.IngressServiceBackendArgs(
-#                                     name=service.metadata['name'],
-#                                     port=k8s.networking.v1.ServiceBackendPortArgs(
-#                                         number=service.spec.ports[0].port,
-#                                     ),
-#                                 ),
-#                             ),
-#                         )
-#                     ],
-#                 ),
-#             )
-#         ],
-#     ),
-#     opts=pulumi.ResourceOptions(parent=service, depends_on=[config_secret]),
-# )

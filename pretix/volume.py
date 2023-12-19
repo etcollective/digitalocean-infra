@@ -16,7 +16,11 @@ volume = digitalocean.Volume(
     name=f'{stack}-pretix',
     size=volume_size,
     region=do_region,
-    opts=pulumi.ResourceOptions(parent=ns, ignore_changes=['tags']),
+    opts=pulumi.ResourceOptions(
+        parent=ns,
+        ignore_changes=['tags'],
+        protect=True,
+    ),
 )
 
 pv = k8s.core.v1.PersistentVolume(
